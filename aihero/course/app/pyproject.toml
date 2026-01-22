@@ -1,0 +1,20 @@
+[project]
+name = "faq-agent"
+version = "0.1.0"
+description = "AI FAQ Assistant Agent"
+requires-python = ">=3.11"
+dependencies = [
+    "minsearch>=0.0.5",
+    "openai>=1.108.2",
+    "pydantic-ai==1.0.9",
+    "python-frontmatter>=1.1.0",
+    "requests>=2.32.5",
+    "streamlit>=1.41.1",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["."]

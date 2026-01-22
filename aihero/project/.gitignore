@@ -8,3 +8,33 @@ wheels/
 
 # Virtual environments
 .venv
+venv/
+env/
+
+# Logs directory (contains API interaction logs)
+logs/
+*.log
+
+# Environment variables
+.env
+.envrc
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+
+# UV lock file (can be regenerated)
+uv.lock
+
+# Streamlit cache
+.streamlit/

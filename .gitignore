@@ -5,6 +5,7 @@
 
 # Python virtual environment
 venv/
+.venv/
 env/
 ENV/
 
@@ -71,4 +72,8 @@ models/
 tmp/
 temp/
 *.tmp
+*.md
+!README.md
+
+
 

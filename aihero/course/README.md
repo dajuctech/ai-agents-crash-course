@@ -1,260 +1,208 @@
-# AI Agents Course - Learning Examples
+# AI FAQ Assistant - Course Implementation
 
-This folder contains the **learning materials and examples** for following the 7-Day AI Agents Crash Course. Here you'll find the complete course notebook with all concepts implemented step-by-step.
+An AI-powered FAQ assistant that can answer questions about any GitHub repository's documentation. Built as part of the 7-Day AI Agents Crash Course by Alexey Grigorev.
 
-## 📚 What's in This Folder
+The agent downloads documentation from GitHub, indexes it into a search engine, and uses GPT-4o-mini with Pydantic AI to answer user questions with source references.
 
-This is the **course practice folder** - use it to follow along with the lessons, experiment, and learn the concepts.
+## Overview
 
-### **Main Files**
+Finding answers in large documentation repositories is tedious. This project solves that by building an end-to-end AI agent that:
 
-- **`aihero_course.ipynb`** - Complete Jupyter notebook with all 7 days
-  - Day 1: Data Ingestion (DataTalksClub/faq & evidentlyai/docs)
-  - Day 2: Document Chunking (3 approaches)
-  - Day 3: Search (text, vector, hybrid)
-  - Day 4: Agents with Tools (Pydantic AI)
-  - Day 5: Logging & Evaluation (LLM-as-judge)
-  - Days 6-7: See `app/` folder
+- Downloads and processes markdown files from any GitHub repo
+- Breaks large documents into searchable chunks
+- Indexes everything into a fast search engine
+- Answers natural language questions with cited sources
 
-- **`main.py`** - Simple CLI runner for testing
-- **`example.md`** - Example frontmatter markdown file
-- **`pyproject.toml`** - Course dependencies
+The system was built incrementally over 7 days, starting with raw data processing and ending with a deployed Streamlit web app.
 
-### **app/ Folder** (Day 6 Structure)
-
-Modular code organization following Day 6 clean code principles:
+## Project Structure
 
 ```
-app/
-├── ingest.py          # Data ingestion from GitHub
-├── search_tools.py    # Search wrapper class
-├── search_agent.py    # Pydantic AI agent
-├── logs.py            # Logging system (Day 5)
-├── app.py             # Streamlit example
-├── main.py            # CLI interface
-├── pyproject.toml     # App-specific dependencies
-└── logs/              # Evaluation logs (generated)
+course/
+├── aihero_course.ipynb        # Full notebook with Days 1-5
+├── main.py                    # Simple CLI runner
+├── example.md                 # Sample frontmatter file
+├── pyproject.toml             # Course dependencies
+├── logs/                      # Agent interaction logs (Day 5)
+│
+├── eval/                      # Evaluation pipeline (Day 5/7)
+│   ├── data_gen.py            # Generate test questions + run agent
+│   └── evaluations.py         # LLM-as-judge evaluation + metrics
+│
+├── app/                       # Production code (Day 6)
+│   ├── ingest.py              # Data pipeline: download, chunk, index
+│   ├── search_tools.py        # Search wrapper class
+│   ├── search_agent.py        # Pydantic AI agent setup
+│   ├── logs.py                # Interaction logging
+│   ├── app.py                 # Streamlit web interface
+│   ├── main.py                # CLI interface
+│   └── pyproject.toml         # App dependencies
+│
+└── Day 1-8 *.md               # Course lesson notes
 ```
 
-## 🎯 What You'll Learn
+## Installation
 
-### **Days 1-3: Data Preparation (70% of work!)**
+### Prerequisites
 
-**Day 1: Data Ingestion**
-- Download GitHub repos as ZIP
-- Parse frontmatter metadata
-- Process `.md` and `.mdx` files
-- Work with DataTalksClub/faq (1,232 docs) and evidentlyai/docs (95 docs)
+- Python 3.11+
+- [uv](https://docs.astral.sh/uv/) package manager
+- OpenAI API key
 
-**Day 2: Document Chunking**
-Three approaches implemented:
-1. **Sliding Window** - Simple, overlapping chunks (2000 chars, 1000 step)
-2. **Section-Based** - Split by markdown headers
-3. **LLM-Powered** - Intelligent semantic chunking (costs money!)
-
-**Day 3: Search**
-Three search methods:
-1. **Text Search** - Fast lexical matching with minsearch
-2. **Vector Search** - Semantic similarity with sentence-transformers
-3. **Hybrid Search** - Combine both for best results
-
-### **Days 4-5: Agent Development**
-
-**Day 4: AI Agents**
-- Compare LLM with/without tools
-- Function calling with OpenAI
-- Pydantic AI framework (simplifies everything!)
-- System prompts for behavior control
-
-**Day 5: Evaluation**
-- Comprehensive logging system
-- LLM-as-judge for automated evaluation
-- Test data generation
-- Batch evaluation with metrics
-
-### **Day 6-7: See app/ folder**
-
-The `app/` folder shows clean, modular code structure ready for deployment.
-
-## 🚀 Quick Start
-
-### **Setup**
+### Notebook setup (Days 1-5)
 
 ```bash
-# Install dependencies
+cd course
 uv sync
 
-# Set API key
-export OPENAI_API_KEY='your-api-key-here'
+# Set your API key
+export OPENAI_API_KEY='your-key-here'
 
 # Start Jupyter
 uv run jupyter notebook
 ```
 
-### **Open the Notebook**
+Open `aihero_course.ipynb` and run cells from Day 1 onward.
 
-Open `aihero_course.ipynb` and run cells sequentially from Day 1 to Day 5.
-
-### **Run the Modular Code (Day 6)**
+### App setup (Day 6)
 
 ```bash
-# From app/ folder
-cd app
+cd course/app
 uv sync
-export OPENAI_API_KEY='your-key'
+
+export OPENAI_API_KEY='your-key-here'
+
+# Run the CLI version
 uv run python main.py
+
+# Or run the Streamlit web app
+uv run streamlit run app.py
 ```
 
-## 📊 Datasets Used
+## Usage
 
-### **DataTalksClub/faq**
-- 1,232 FAQ documents
-- Small, clean records
-- No chunking needed
-- Perfect for learning text search
-
-### **evidentlyai/docs**
-- 95 documentation files
-- Large documents (20k+ chars)
-- Requires chunking
-- Great for learning chunking strategies
-
-## 🔧 Key Concepts Implemented
-
-### **Data Processing**
-- ZIP download without git clone
-- Frontmatter parsing (YAML metadata)
-- Error handling for malformed files
-- Efficient in-memory processing
-
-### **Chunking Strategies**
-- Sliding window with overlap (context preservation)
-- Section-based splitting (document structure)
-- LLM intelligent chunking (semantic coherence)
-- Comparison of all three approaches
-
-### **Search Methods**
-- minsearch for text search (lexical matching)
-- sentence-transformers for embeddings
-- Vector search with cosine similarity
-- Hybrid approach for best results
-
-### **Agent Implementation**
-- Raw OpenAI function calling (manual)
-- Pydantic AI framework (automated)
-- Tool definition and execution
-- System prompt engineering
-
-### **Evaluation System**
-- Interaction logging to JSON
-- LLM-as-judge evaluation
-- Structured evaluation criteria
-- Metrics calculation and analysis
-
-## 💡 Learning Tips
-
-1. **Follow Sequentially** - Each day builds on previous
-2. **Run All Cells** - Don't just read, execute!
-3. **Experiment** - Change parameters, try different repos
-4. **Compare Approaches** - See which works best for your case
-5. **Start Simple** - Sliding window before LLM chunking, text before vector search
-
-## 📝 Key Files Explained
-
-### **aihero_course.ipynb**
-Complete notebook with:
-- All 7 days of content
-- Code examples
-- Explanations
-- Results from running examples
-
-### **app/ Structure (Day 6)**
-Clean, modular code showing production-ready organization:
-- Separate modules for each concern
-- Reusable functions
-- Clear dependencies
-- Easy to test and maintain
-
-### **logs/ Folder**
-Generated by Day 5 code:
-- Agent interaction logs
-- JSON format for analysis
-- Includes prompts, responses, tool calls
-- Used for evaluation
-
-## 🎓 Course Structure
+### CLI
 
 ```
-Day 1: Data Ingestion
-  ↓
-Day 2: Chunking (if needed)
-  ↓
-Day 3: Search (text → vector → hybrid)
-  ↓
-Day 4: Agent with Tools
-  ↓
-Day 5: Logging & Evaluation
-  ↓
-Day 6: Clean Code (see app/)
-  ↓
-Day 7: Iteration (use metrics to improve)
+$ uv run python main.py
+Starting AI FAQ Assistant for DataTalksClub/faq
+Initializing data ingestion...
+Data indexing completed successfully!
+Agent initialized successfully!
+
+Ready to answer your questions!
+Type 'stop' to exit the program.
+
+Your question: Can I still join the course after the start date?
+
+Response:
+ Yes, you can still join the course even after the start date...
 ```
 
-## 🔍 What Makes This "Course" vs "Project"
+### Streamlit Web App
 
-| Aspect | Course Folder (This One) | Project Folder |
-|--------|-------------------------|----------------|
-| Purpose | Learning & practice | Production implementation |
-| Dataset | DataTalksClub FAQ + Evidently docs | Tech Interview Handbook |
-| Structure | Jupyter notebook + modular app/ | Pure modular Python + Streamlit |
-| Goal | Understand concepts | Working application |
+Run `uv run streamlit run app.py` and open the browser. Type your question in the chat input and get answers with source links back to the GitHub repository.
 
-## 📚 Dependencies
+## What Was Built (Day by Day)
 
-**Core:**
-- `requests` - Download GitHub repos
-- `python-frontmatter` - Parse markdown metadata
-- `minsearch` - Text search engine
-- `sentence-transformers` - Embeddings for vector search
-- `openai` - LLM API
-- `pydantic-ai` - Agent framework
+**Day 1 - Data Ingestion:** Downloaded GitHub repos as ZIP archives, parsed frontmatter metadata from markdown files, processed 1,232 FAQ docs and 95 Evidently docs.
 
-**Optional:**
-- `numpy` - Vector operations
-- `tqdm` - Progress bars
-- `pandas` - Metrics analysis
+**Day 2 - Chunking:** Implemented three approaches for breaking large documents into smaller pieces: sliding window with overlap, section-based splitting by markdown headers, and LLM-powered intelligent chunking.
 
-## ⚡ Common Commands
+**Day 3 - Search:** Built three search methods: text search (lexical matching with minsearch), vector search (semantic similarity with sentence-transformers), and hybrid search combining both.
+
+**Day 4 - Agent with Tools:** Connected the search engine to GPT-4o-mini using OpenAI function calling, then simplified everything with Pydantic AI. The agent can now look up real answers instead of guessing.
+
+**Day 5 - Evaluation:** Built a logging system to record all interactions, created an LLM-as-judge evaluation pipeline with structured criteria (relevance, citations, completeness), generated test questions automatically, and calculated pass rate metrics.
+
+**Day 6 - Deployment:** Cleaned up notebook code into modular Python files, built a Streamlit web interface with streaming responses, deployed to Streamlit Cloud.
+
+**Day 7 - Polish:** Organized the repository, wrote this README, created demo materials.
+
+## Evaluation
+
+The agent is evaluated using an LLM-as-judge approach. A separate evaluation agent scores each interaction against 7 criteria:
+
+| Check | Description |
+|-------|-------------|
+| instructions_follow | Agent followed system prompt instructions |
+| instructions_avoid | Agent avoided forbidden actions |
+| answer_relevant | Response directly addresses the question |
+| answer_clear | Answer is clear and correct |
+| answer_citations | Includes proper source citations |
+| completeness | Covers all key aspects of the question |
+| tool_call_search | Search tool was invoked |
+
+### Evaluation code
+
+The evaluation pipeline lives in the `eval/` folder:
+
+```
+eval/
+├── data_gen.py       # Generates test questions and runs them through the agent
+└── evaluations.py    # Evaluates logged interactions and prints pass rate metrics
+```
+
+### Running evaluations
 
 ```bash
-# Start notebook
-uv run jupyter notebook
+# Step 1: Generate test data (creates logged interactions)
+cd app
+export OPENAI_API_KEY='your-key'
+python ../eval/data_gen.py
 
-# Run CLI (from app/)
-cd app && uv run python main.py
-
-# Clean logs
-rm -rf app/logs/*.json logs/*.json
-
-# Install all dependencies
-uv sync
+# Step 2: Evaluate the logs
+python ../eval/evaluations.py
 ```
 
-## 🎯 Next Steps
+### How it works
 
-After completing the course notebook:
-1. ✅ Understand all 7 days of concepts
-2. ✅ Experiment with different datasets
-3. ✅ Try different chunking strategies
-4. ✅ Compare search methods
-5. ✅ Build your own agent (see ../project/ folder)
+1. **Data generation** (`data_gen.py`): Samples 10 FAQ records, asks GPT-4o-mini to generate realistic student questions from them, runs each through the agent, and logs the interactions.
 
-## 📖 Resources
+2. **Evaluation** (`evaluations.py`): Loads all log files, sends each interaction to an evaluation agent that scores it against the 7-point checklist, then calculates overall pass rates.
 
-- **Course:** https://alexeygrigorev.com/aihero/
-- **Pydantic AI:** https://ai.pydantic.dev/
-- **Community:** DataTalks.Club Slack → #course-ai-hero
+Interaction logs are stored as JSON files in `app/logs/` and `logs/`. Each log contains the system prompt, user question, tool calls, search results, and final answer.
 
----
+### Results
 
-**This is the learning folder** - For production implementation, see the `../project/` folder which has a complete Tech Interview AI Assistant built using these concepts!
+| Check | Pass Rate |
+|-------|-----------|
+| instructions_follow | 93% |
+| instructions_avoid | 100% |
+| answer_relevant | 93% |
+| answer_clear | 93% |
+| answer_citations | 86% |
+| completeness | 93% |
+| tool_call_search | 93% |
+
+**Total interactions evaluated:** 14
+
+The agent passes all checks on 12 out of 14 test questions. The two failures were on an off-topic question ("What is your name") where the agent correctly had no FAQ to search, and one question where a source citation was missing. Core functionality — following instructions, relevance, clarity, and tool usage — scores 93% or above.
+
+## Datasets
+
+| Dataset | Documents | Size | Chunking |
+|---------|-----------|------|----------|
+| DataTalksClub/faq | 1,232 | Small records | Not needed |
+| evidentlyai/docs | 95 | 20k+ chars each | Required |
+
+## Tech Stack
+
+- **Data processing:** requests, python-frontmatter, zipfile
+- **Search:** minsearch (text), sentence-transformers (vector)
+- **Agent:** Pydantic AI, OpenAI GPT-4o-mini
+- **Evaluation:** LLM-as-judge with structured output (Pydantic models)
+- **UI:** Streamlit
+- **Package management:** uv
+
+## Acknowledgments
+
+- [Alexey Grigorev](https://alexeygrigorev.com/aihero/) for the AI Agents Crash Course
+- [DataTalks.Club](https://datatalks.club/) community
+- [Pydantic AI](https://ai.pydantic.dev/) documentation and examples
+
+## Resources
+
+- Course signup: https://alexeygrigorev.com/aihero/
+- Community: DataTalks.Club Slack, #course-ai-hero channel
+- Pydantic AI docs: https://ai.pydantic.dev/

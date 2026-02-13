@@ -1,0 +1,16 @@
+[project]
+name = "credit-risk-agent"
+version = "1.0.0"
+description = "Credit Risk Scorecard AI Agent - built for AI Agents Crash Course project"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "minsearch>=0.0.5",
+    "openai>=1.108.2",
+    "pydantic-ai==1.0.9",
+    "python-frontmatter>=1.1.0",
+    "python-dotenv>=1.0.0",
+    "requests>=2.32.5",
+    "streamlit>=1.32.0",
+]
+

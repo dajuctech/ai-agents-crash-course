@@ -1,58 +1,31 @@
-"""
-Search Agent Module - Day 4 Concepts
-Creates and configures the Pydantic AI agent with function calling
-"""
-
+import search_tools
 from pydantic_ai import Agent
-from app.search_tools import SearchTool
 
 
-SYSTEM_PROMPT_TEMPLATE = """
-You are a helpful assistant for technical interview preparation.
+SYSTEM_PROMPT = """
+You are a helpful assistant for credit risk scorecard development.
 
-Use the search tool to find relevant information from the Tech Interview Handbook before answering questions.
+Use the search tool to find relevant information from the credit risk and scorecard materials before answering questions.
 
 If you can find specific information through search, use it to provide accurate answers.
 
 Always include references by citing the filename of the source material you used.
-Replace it with the full path to the GitHub repository:
-"https://github.com/{repo_owner}/{repo_name}/blob/main/"
+When citing the reference, use the full path to the GitHub repository for the relevant repo:
+- skorecard docs: "https://github.com/ing-bank/skorecard/blob/main/"
+- optbinning docs: "https://github.com/guillermo-navas-palencia/optbinning/blob/master/"
+- Credit Risk Modelling docs: "https://github.com/levist7/Credit_Risk_Modelling/blob/main/"
 Format: [LINK TITLE](FULL_GITHUB_LINK)
 
 If the search doesn't return relevant results, let the user know and provide general guidance.
-
-Be concise but comprehensive. Use bullet points and clear formatting when appropriate.
 """.strip()
 
+def init_agent(index):
+    search_tool = search_tools.SearchTool(index=index)
 
-def init_agent(index, repo_owner: str, repo_name: str, model: str = 'gpt-4o-mini'):
-    """
-    Initialize the Pydantic AI agent with search capabilities.
-
-    Args:
-        index: minsearch Index for searching
-        repo_owner: GitHub repository owner
-        repo_name: GitHub repository name
-        model: OpenAI model to use
-
-    Returns:
-        Configured Pydantic AI Agent
-    """
-    # Create system prompt with repository information
-    system_prompt = SYSTEM_PROMPT_TEMPLATE.format(
-        repo_owner=repo_owner,
-        repo_name=repo_name
-    )
-
-    # Create search tool
-    search_tool = SearchTool(index=index)
-
-    # Create and configure agent
     agent = Agent(
-        name="tech_interview_agent",
-        instructions=system_prompt,
+        name="credit_risk_agent",
+        instructions=SYSTEM_PROMPT,
         tools=[search_tool.search],
-        model=f'openai:{model}'
+        model='gpt-4o-mini'
     )
-
     return agent

@@ -28,4 +28,5 @@ include = ["app*"]
 dev = [
     "jupyter>=1.0.0",
     "ipykernel>=6.29.0",
+    "notebook>=7.5.1",
 ]

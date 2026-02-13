@@ -1,8 +1,8 @@
 """
-Tech Interview AI Assistant Application
+Credit Risk Scorecard AI Agent
 
-A Streamlit web application for technical interview preparation
-powered by AI and the Tech Interview Handbook.
+A Streamlit web application for credit risk scorecard development
+powered by AI and documentation from skorecard, optbinning, and Credit Risk Modelling repos.
 """
 
 __version__ = "1.0.0"

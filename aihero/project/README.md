@@ -6,13 +6,11 @@ The agent downloads documentation from 3 credit risk GitHub repositories, indexe
 
 ## Demo
 
-<!-- TODO: Add demo video link here -->
-<!-- Example: [![Demo Video](https://img.youtube.com/vi/VIDEO_ID/0.jpg)](https://youtu.be/VIDEO_ID) -->
+[![Demo Video](https://img.youtube.com/vi/GwK6AHL4RNY/0.jpg)](https://youtu.be/GwK6AHL4RNY)
 
 **Streamlit Web App:**
 
-<!-- TODO: Add screenshot of the Streamlit app here -->
-<!-- ![Streamlit App](screenshots/streamlit_app.png) -->
+![Streamlit App](screenshots/image.png)
 
 **CLI Mode:**
 
@@ -73,6 +71,10 @@ project/
 │   ├── main.py               # CLI entry point
 │   ├── app.py                # Streamlit web UI with streaming responses
 │   └── pyproject.toml        # App dependencies
+│
+├── eval/                     # Evaluation notebooks (Day 5)
+│   ├── data_gen.ipynb        # Generate test questions and run agent to produce logs
+│   └── evaluations.ipynb     # LLM-as-judge evaluation across 7 criteria
 │
 ├── questions.md              # Sample test questions by topic
 ├── .env                      # API key (not committed)
@@ -175,20 +177,17 @@ Interaction logs are stored as JSON files in `app/logs/`. Each log contains the 
 
 ### Results
 
-<!-- TODO: Run evaluation and fill in actual numbers -->
-<!--
 | Check | Pass Rate |
 |-------|-----------|
-| instructions_follow | XX% |
-| instructions_avoid | XX% |
-| answer_relevant | XX% |
-| answer_clear | XX% |
-| answer_citations | XX% |
-| completeness | XX% |
-| tool_call_search | XX% |
+| instructions_follow | 100% |
+| instructions_avoid | 100% |
+| answer_relevant | 100% |
+| answer_clear | 100% |
+| answer_citations | 100% |
+| completeness | 100% |
+| tool_call_search | 100% |
 
-**Total interactions evaluated:** XX
--->
+**Total interactions evaluated:** 15
 
 ## Notebook (Days 1-5)
 
@@ -245,6 +244,12 @@ I work as an ML Engineer (Credit Risk & Decisioning) and Data Scientist (Risk An
 - [optbinning](https://github.com/guillermo-navas-palencia/optbinning) for the optimal binning library
 - [Credit_Risk_Modelling](https://github.com/levist7/Credit_Risk_Modelling) for PD/LGD/EAD notebooks
 - [Pydantic AI](https://ai.pydantic.dev/) documentation and examples
+
+## Blog Post
+
+Read the full write-up on Medium — covers the project day by day, all the credit risk concepts explained for beginners, and key lessons learned:
+
+[I Built a Credit Risk AI Agent in 7 Days — Here's Everything I Learned](https://medium.com/@danieljude1992/i-built-a-credit-risk-ai-agent-in-7-days-heres-everything-i-learned-08fade668c00)
 
 ## Resources
 
